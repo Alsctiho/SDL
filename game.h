@@ -33,12 +33,12 @@ public:
 class Ball
 {
 private:
-    float mx;
-    float my;
+    float mpx;
+    float mpy;
     Vector2 mVel;
 
-    float radius;
-    SDL_Rect* render;
+    float mRadius;
+    SDL_Rect* mRect;
 
 public:
     Ball();
@@ -60,8 +60,10 @@ public:
     void setVelX(float x);
     void setVelY(float y);
 
+
+    void updateRenderObject();
     //render the object
-    void renderBall(SDL_Renderer* mRenderer);
+    void renderBall(SDL_Renderer* renderer);
 };
 
 class Game

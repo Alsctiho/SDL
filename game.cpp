@@ -180,14 +180,6 @@ void Game::generateOutput()
     SDL_RenderFillRect(mRenderer, wall + 2);
 
     //draw ball
-    SDL_Rect ball
-    {
-        static_cast<int>(mBall.getPosX() - thickness/2),
-        static_cast<int>(mBall.getPosY() - thickness/2),
-        thickness,
-        thickness
-    };
-
     mBall.renderBall(mRenderer);
     
     //draw paddle

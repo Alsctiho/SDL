@@ -1,5 +1,6 @@
 #include "game.h"
-
+#include <iostream>
+using namespace std;
 
 //class Paddle
 Paddle::Paddle()
@@ -54,40 +55,59 @@ void Paddle::setDirection(int dir)
 //class Ball
 Ball::Ball()
 {
-    mx = 0.0f;
-    my = 0.0f;
+    mpx = 0.0f;
+    mpy = 0.0f;
+
     mVel.x = 0.0f;
     mVel.y = 0.0f;
-    render = new SDL_Rect;
+
+    mRadius = 10.0f;
+    mRect = new SDL_Rect;
+    mRect->x = 0;
+    mRect->y = 0;
+    mRect->h = static_cast<int>(2 * mRadius);
+    mRect->w = static_cast<int>(2 * mRadius);
 }
 
 Ball::Ball(float px, float py, float vx, float vy)
 { 
     setPos(px, py);
     setVel(vx, vy);
-    render = new SDL_Rect;
+    mRadius = 10.0f;
+    mRect = new SDL_Rect;
+    mRect->x = 0;
+    mRect->y = 0;
+    mRect->h = static_cast<int>(2 * mRadius);
+    mRect->w = static_cast<int>(2 * mRadius);
 }
 
 Ball::~Ball()
 {
-    delete render;
-    render = nullptr;
+    delete mRect;
+    mRect = nullptr;
 }
 
-float Ball::getPosX() const{ return mx; }
-float Ball::getPosY() const{ return my; }
+float Ball::getPosX() const{ return mpx; }
+float Ball::getPosY() const{ return mpy; }
 
 Vector2 Ball::getVel() const{ return mVel; }
 float Ball::getVelX() const{ return mVel.x; }
 float Ball::getVelY() const{ return mVel.y; }
-SDL_Rect* Ball::getRenderObject() const{ return render;}
+SDL_Rect* Ball::getRenderObject() const{ return mRect;}
 
-void Ball::setPos(float x, float y){ mx = x; my = y; }
+void Ball::setPos(float x, float y){ mpx = x; mpy = y; }
 void Ball::setVel(float x, float y){ mVel = {x , y}; }
 void Ball::setVelX(float x){ setVel(x, mVel.y); }
 void Ball::setVelY(float y){ setVel(mVel.x, y); }
 
-void Ball::renderBall(SDL_Renderer* mRenderer)
+void Ball::updateRenderObject()
 {
-    SDL_RenderFillRect(mRenderer, getRenderObject());
+    mRect->x = static_cast<int>(mpx - mRadius);
+    mRect->y = static_cast<int>(mpy - mRadius);
+}
+
+void Ball::renderBall(SDL_Renderer* renderer)
+{
+    updateRenderObject();
+    SDL_RenderFillRect(renderer, mRect);
 }
