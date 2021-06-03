@@ -13,13 +13,18 @@ struct Vector2
 class Paddle
 {
 private:
-    float mx;
-    float my;
+    float mpx;
+    float mpy;
     int direction;
 
+    int mThickness;
+    float mPaddleH;
+    SDL_Rect* mRect;
+
 public:
-    Paddle();
-    Paddle(float x, float y);
+    Paddle(float x = 0.0f, float y = 0.0f);
+
+    ~Paddle();
 
     float getX() const;
     float getY() const;
@@ -28,6 +33,10 @@ public:
     void setPos(float x, float y);
     void setY(float y);
     void setDirection(int dir);
+
+    void updateRenderObject();
+    //render the object
+    void renderPaddle(SDL_Renderer* renderer);
 };
 
 class Ball
@@ -41,8 +50,7 @@ private:
     SDL_Rect* mRect;
 
 public:
-    Ball();
-    Ball(float px, float py, float vx, float vy);
+    Ball(float px = 0.0f, float py = 0.0f, float vx = 0.0f, float vy = 0.0f);
 
     ~Ball();
 
@@ -54,12 +62,10 @@ public:
     float getVelY() const;
     SDL_Rect* getRenderObject() const;
 
-
     void setPos(float x, float y);
     void setVel(float x, float y);
     void setVelX(float x);
     void setVelY(float y);
-
 
     void updateRenderObject();
     //render the object

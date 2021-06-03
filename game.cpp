@@ -183,15 +183,7 @@ void Game::generateOutput()
     mBall.renderBall(mRenderer);
     
     //draw paddle
-    SDL_Rect paddle
-    {
-        static_cast<int>(mPaddle.getX() - thickness/2),
-        static_cast<int>(mPaddle.getY() - paddleH/2),
-        thickness,
-        static_cast<int>(paddleH)
-    };
-
-    SDL_RenderFillRect(mRenderer, &paddle);
+    mPaddle.renderPaddle(mRenderer);
 
     SDL_RenderPresent(mRenderer);
 

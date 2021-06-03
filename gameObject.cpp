@@ -3,72 +3,60 @@
 using namespace std;
 
 //class Paddle
-Paddle::Paddle()
-{
-    mx = 0.0f;
-    my = 0.0f;
-    direction = 0;
-}
-
 Paddle::Paddle(float x, float y)
 {
     setPos(x, y);
     direction = 0;
+    mThickness = 15;
+    mPaddleH = 100.0f;
+    mRect = new SDL_Rect;
+    mRect->x = static_cast<int>(mThickness);
+    mRect->y = 0;
+    mRect->w = mThickness;
+    mRect->h = static_cast<int>(mPaddleH);
 }
 
-float Paddle::getX() const
+Paddle::~Paddle()
 {
-    return mx;
+    delete mRect;
+    mRect = nullptr;
 }
 
-float Paddle::getY() const
-{
-    return my;
-}
-
-int Paddle::getDirection() const
-{
-    return direction;
-}
+float Paddle::getX() const{ return mpx; }
+float Paddle::getY() const{ return mpy; }
+int Paddle::getDirection() const{ return direction; }
 
 void Paddle::setPos(float x, float y)
 {
-    mx = x;
-    my = y;
+    mpx = x;
+    mpy = y;
 }
 
 void Paddle::setY(float y)
 {
     if(y < 65.0f)
-        my = 65.0f;
+        mpy = 65.0f;
     else if(y > 703.0f)
-        my = 703.0f;
+        mpy = 703.0f;
     else
-        my = y;
+        mpy = y;
 }
 
-void Paddle::setDirection(int dir)
+void Paddle::setDirection(int dir){ direction = dir; }
+
+void Paddle::updateRenderObject()
 {
-    direction = dir;
+    mRect->y = static_cast<int>(mpy - mPaddleH/2);
 }
 
+void Paddle::renderPaddle(SDL_Renderer* renderer)
+{
+    updateRenderObject();
+    SDL_RenderFillRect(renderer, mRect);
+}
+
+//--------------------------------------------------------------
 //class Ball
-Ball::Ball()
-{
-    mpx = 0.0f;
-    mpy = 0.0f;
-
-    mVel.x = 0.0f;
-    mVel.y = 0.0f;
-
-    mRadius = 10.0f;
-    mRect = new SDL_Rect;
-    mRect->x = 0;
-    mRect->y = 0;
-    mRect->h = static_cast<int>(2 * mRadius);
-    mRect->w = static_cast<int>(2 * mRadius);
-}
-
 Ball::Ball(float px, float py, float vx, float vy)
 { 
     setPos(px, py);
