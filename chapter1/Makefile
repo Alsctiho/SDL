@@ -4,7 +4,7 @@ CXXFLAGS = -c -Wall
 OBJS = main.o game.o gameObject.o
 
 main: $(OBJS)
-	$(CXX) -o main $(OBJS) -L./lib -lmingw32 -lSDL2main -lSDL2
+	$(CXX) -o main $(OBJS) -LC:\cppProject\SDL\lib -lmingw32 -lSDL2main -lSDL2
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $<
