@@ -22,9 +22,10 @@ Paddle::~Paddle()
     mRect = nullptr;
 }
 
-float Paddle::getX() const{ return mpx; }
-float Paddle::getY() const{ return mpy; }
+float Paddle::getPosX() const{ return mpx; }
+float Paddle::getPosY() const{ return mpy; }
 int Paddle::getDirection() const{ return direction; }
+float Paddle::getPaddleH() const{ return mPaddleH; }
 
 void Paddle::setPos(float x, float y)
 {
@@ -87,6 +88,10 @@ void Ball::setPos(float x, float y){ mpx = x; mpy = y; }
 void Ball::setVel(float x, float y){ mVel = {x , y}; }
 void Ball::setVelX(float x){ setVel(x, mVel.y); }
 void Ball::setVelY(float y){ setVel(mVel.x, y); }
+
+void Ball::invertVel(){ setVel(-mVel.x, -mVel.y); }
+void Ball::invertVelX(){ setVelX(-mVel.x); }
+void Ball::invertVelY(){ setVelY(-mVel.y); }
 
 void Ball::updateRenderObject()
 {

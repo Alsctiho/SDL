@@ -26,9 +26,10 @@ public:
 
     ~Paddle();
 
-    float getX() const;
-    float getY() const;
+    float getPosX() const;
+    float getPosY() const;
     int getDirection() const;
+    float getPaddleH() const;
 
     void setPos(float x, float y);
     void setY(float y);
@@ -66,6 +67,10 @@ public:
     void setVel(float x, float y);
     void setVelX(float x);
     void setVelY(float y);
+
+    void invertVel();
+    void invertVelX();
+    void invertVelY();
 
     void updateRenderObject();
     //render the object

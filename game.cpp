@@ -142,13 +142,32 @@ void Game::updateGame()
     //update tick counts for next frame
     mTicksCount = SDL_GetTicks();
     
-    mPaddle.setY(mPaddle.getY()  + mPaddle.getDirection() * 300.0f * deltaTime);
+    mPaddle.setY(mPaddle.getPosY()  + mPaddle.getDirection() * 300.0f * deltaTime);
 
     Vector2 nextBallPosition;
     nextBallPosition.x = mBall.getPosX() + mBall.getVelX() * deltaTime;
     nextBallPosition.y = mBall.getPosY() + mBall.getVelY() * deltaTime;
     mBall.setPos(nextBallPosition.x, nextBallPosition.y);
 
+    //collision detection
+    if((mBall.getPosY() < thickness && mBall.getVelY() < 0.0f) || 
+    (mBall.getPosY() > windowHeight - thickness && mBall.getVelY() > 0.0f))
+        mBall.invertVelY();
+
+    if(mBall.getPosX() > windowWidth - thickness)
+        mBall.invertVelX();
+
+    float diff = abs(mBall.getPosY() - mPaddle.getPosY());
+    if
+    (
+        // Our y-difference is small enough
+        diff <= mPaddle.getPaddleH()/2.0f &&
+        // Ball is at the correct x-position
+        mBall.getPosX() <= 25.0f && mBall.getPosX() >= 20.0f &&
+        // The ball is moving to the left
+        mBall.getVelX() < 0.0f
+    )
+        mBall.invertVelX();
     //std::cout << "updateGame end" << std::endl;
     return;
 }
